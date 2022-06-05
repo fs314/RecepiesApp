@@ -1,2 +1,3 @@
-# RecepiesApp
-App that lets you browse, save, share recepies
+# RecipesApp
+
+App that lets you browse, save, share recipes

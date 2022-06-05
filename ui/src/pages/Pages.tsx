@@ -3,7 +3,7 @@ import Home from "./Home";
 
 const Pages = () => {
   return (
-    <div className="text-3xl font-bold underline">
+    <div>
       <Home></Home>
     </div>
   );
