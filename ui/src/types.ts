@@ -25,6 +25,8 @@ export interface recipesListingProps {
   recipes: recipe[];
 }
 
-export interface searchBarProps {
+export interface textSearchProps {
+  text: string;
   icon: ReactElement;
+  getInput: (text: string) => void;
 }

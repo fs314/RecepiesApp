@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/SearchBar/SearchBar";
 import RecipesListing from "../components/RecipesListing";
-import { GoBook } from "react-icons/go";
 import axios from "axios";
 
 const Home = () => {
@@ -17,7 +16,7 @@ const Home = () => {
 
   return (
     <>
-      <SearchBar icon={<GoBook />} />
+      <SearchBar />
       <RecipesListing recipes={recipes} />
     </>
   );
