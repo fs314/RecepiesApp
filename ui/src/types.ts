@@ -1,31 +1,31 @@
 import { ReactElement } from "react";
 
-export interface cookingTimeType {
+export interface CookingTimeType {
   amount: number;
   unit: string;
 }
 
-export interface ingredients {
+export interface Ingredients {
   type: string;
   qty: number;
   measurement: string;
 }
 
-export interface recipe {
+export interface Recipe {
   name: string;
   instructions: string;
-  ingredients: ingredients[];
+  ingredients: Ingredients[];
   serves: number;
-  cookingTime: cookingTimeType;
+  cookingTime: CookingTimeType;
   images: string[];
   tags: string[];
 }
 
-export interface recipesListingProps {
-  recipes: recipe[];
+export interface RecipesListingProps {
+  recipes: Recipe[];
 }
 
-export interface textSearchProps {
+export interface TextSearchProps {
   text: string;
   icon: ReactElement;
   getInput: (text: string) => void;

@@ -1,11 +1,11 @@
 import React from "react";
-import Home from "./Home";
+import Browse from "./Browse";
 
 const Pages = () => {
   return (
-    <div>
-      <Home></Home>
-    </div>
+    <>
+      <Browse></Browse>
+    </>
   );
 };
 

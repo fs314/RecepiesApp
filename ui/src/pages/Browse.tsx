@@ -3,7 +3,7 @@ import SearchBar from "../components/SearchBar/SearchBar";
 import RecipesListing from "../components/RecipesListing";
 import axios from "axios";
 
-const Home = () => {
+const Browse = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -22,4 +22,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Browse;

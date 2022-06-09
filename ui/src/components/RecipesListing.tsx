@@ -1,8 +1,8 @@
 import React from "react";
-import { recipesListingProps } from "../types";
+import { RecipesListingProps } from "../types";
 import Recipe from "./Recipe";
 
-const RecipesListing = ({ recipes }: recipesListingProps) => {
+const RecipesListing = ({ recipes }: RecipesListingProps) => {
   return (
     <div className="flex justify-evenly flex-wrap">
       {recipes.map((recipe) => {

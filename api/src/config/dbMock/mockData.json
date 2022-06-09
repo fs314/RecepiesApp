@@ -1,6 +1,6 @@
 [{
  "name": "stir-fry",
- "recipe": "textextexttext",
+ "instructions":"textextexttext",
  "ingredients": [
      {"type": "vegetables", "qty": 5, "measurement": ""},
      {"type": "noodles", "qty": 300, "measurement": "gm"},
@@ -18,7 +18,7 @@
 },
 {
     "name": "tacos",
-    "recipe": "textextexttext",
+    "instructions":"textextexttext",
     "ingredients": [
         {"type": "vegetables", "qty": 5, "measurement": ""},
         {"type": "noodles", "qty": 300, "measurement": "gm"},
@@ -36,7 +36,7 @@
    },
    {
     "name": "pizza",
-    "recipe": "textextexttext",
+    "instructions":"textextexttext",
     "ingredients": [
         {"type": "vegetables", "qty": 5, "measurement": ""},
         {"type": "noodles", "qty": 300, "measurement": "gm"},
@@ -54,7 +54,7 @@
    },
    {
     "name": "fish and chips",
-    "recipe": "textextexttext",
+    "instructions":"textextexttext",
     "ingredients": [
         {"type": "vegetables", "qty": 5, "measurement": ""},
         {"type": "noodles", "qty": 300, "measurement": "gm"},
