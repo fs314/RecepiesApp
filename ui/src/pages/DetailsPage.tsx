@@ -25,7 +25,14 @@ const DetailsPage = ({ details }: { details: Recipe }) => {
         <div>
           Ingredients:{" "}
           {details.ingredients.map((ingredient) => {
-            return <p>{ingredient.type}</p>;
+            return (
+              <p
+                key={`${ingredient.ingredientType}`}
+                data-testid={`${ingredient.ingredientType}`}
+              >
+                {ingredient.ingredientType}
+              </p>
+            );
           })}
         </div>
       </div>

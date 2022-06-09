@@ -6,7 +6,7 @@ export interface CookingTimeType {
 }
 
 export interface Ingredients {
-  type: string;
+  ingredientType: string;
   qty: number;
   measurement: string;
 }

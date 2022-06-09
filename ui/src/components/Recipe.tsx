@@ -1,7 +1,7 @@
 import React from "react";
-import { Recipe } from "../types";
+import { Recipe as RecipeProps } from "../types";
 
-const Recipe = ({ name, serves, images }: Recipe) => {
+const Recipe = ({ name, serves, images }: RecipeProps) => {
   return (
     <div className="border border-black p-2 mt-5">
       <div className="max-w-md" id="image-container">

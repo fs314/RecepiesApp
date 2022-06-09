@@ -6,9 +6,9 @@ const details = {
   name: "stir-fry",
   instructions: "textextexttext",
   ingredients: [
-    { type: "vegetables", qty: 5, measurement: "" },
-    { type: "noodles", qty: 300, measurement: "gm" },
-    { type: "soy sauce", qty: 1, measurement: "tbspoon" },
+    { ingredientType: "vegetables", qty: 5, measurement: "" },
+    { ingredientType: "noodles", qty: 300, measurement: "gm" },
+    { ingredientType: "soy sauce", qty: 1, measurement: "tbspoon" },
   ],
   serves: 4,
   cookingTime: { amount: 10, unit: "min" },
@@ -27,4 +27,7 @@ it("Should render recipe details", () => {
       `Cooking Time: ${details.cookingTime.amount}${details.cookingTime.unit}`
     )
   ).toBeInTheDocument();
+  expect(screen.getByTestId("vegetables")).toBeInTheDocument();
+  expect(screen.getByTestId("noodles")).toBeInTheDocument();
+  expect(screen.getByTestId("soy sauce")).toBeInTheDocument();
 });

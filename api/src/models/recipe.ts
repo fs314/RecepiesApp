@@ -5,7 +5,7 @@ const recipeSchema = new mongoose.Schema({
   instructions: String,
   ingredients: [
     {
-      type: String,
+      ingredientType: String,
       qty: Number,
       measurement: String,
     },

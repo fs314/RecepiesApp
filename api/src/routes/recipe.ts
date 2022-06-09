@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getRecipe,
-  //   createRecipe,
+  createRecipe,
   //   updateRecipe,
   //   deleteRecipe,
 } from "../controllers/recipe.js";
@@ -9,7 +9,8 @@ import {
 const router = express.Router();
 
 router.get("/", getRecipe);
-// router.post('/', createRecipe())
+
+router.post("/", createRecipe);
 // router.put('/', updateRecipe())
 // router.delete('/', deleteRecipe())
 

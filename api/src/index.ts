@@ -8,10 +8,9 @@ import recipeRoutes from "./routes/recipe";
 const app = express();
 const port = 4000;
 
-app.use("/recipe", recipeRoutes);
-
 app.use(express.json());
 app.use(cors());
+app.use("/recipe", recipeRoutes);
 
 mongoose
   .connect("")
