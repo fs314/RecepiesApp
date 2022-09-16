@@ -12,6 +12,7 @@ export interface Ingredients {
 }
 
 export interface Recipe {
+  id: string;
   name: string;
   instructions: string;
   ingredients: Ingredients[];
@@ -21,9 +22,9 @@ export interface Recipe {
   tags: string[];
 }
 
-export interface RecipesListingProps {
-  recipes: Recipe[];
-}
+// export interface RecipesListingProps {
+//   recipes: Recipe[];
+// }
 
 export interface TextSearchProps {
   text: string;
