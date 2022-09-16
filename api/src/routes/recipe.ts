@@ -1,17 +1,24 @@
 import express from "express";
 import {
-  getRecipe,
-  createRecipe,
+  getRecipes,
+  getRecipeById,
+  getRecipesByName,
+  createRecipes,
+  deleteRecipe,
   //   updateRecipe,
-  //   deleteRecipe,
 } from "../controllers/recipe.js";
 
 const router = express.Router();
 
-router.get("/", getRecipe);
+router.get("/", getRecipes);
 
-router.post("/", createRecipe);
-// router.put('/', updateRecipe())
-// router.delete('/', deleteRecipe())
+router.get("/:id", getRecipeById);
+
+//works only if name matches exactly. case sensitive.
+router.get("/byText/:name", getRecipesByName);
+
+router.post("/", createRecipes);
+
+router.delete("/:id", deleteRecipe);
 
 export default router;

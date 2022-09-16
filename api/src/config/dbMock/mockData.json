@@ -2,9 +2,9 @@
  "name": "stir-fry",
  "instructions":"textextexttext",
  "ingredients": [
-     {"type": "vegetables", "qty": 5, "measurement": ""},
-     {"type": "noodles", "qty": 300, "measurement": "gm"},
-     {"type": "soy sauce", "qty": 1, "measurement": "tbspoon"}
+     {"ingredientType": "vegetables", "qty": 5, "measurement": ""},
+     {"ingredientType": "noodles", "qty": 300, "measurement": "gm"},
+     {"ingredientType": "soy sauce", "qty": 1, "measurement": "tbspoon"}
  ],
  "serves": 4,
  "cookingTime": {"amount": 10, "unit": "min"},
@@ -20,9 +20,9 @@
     "name": "tacos",
     "instructions":"textextexttext",
     "ingredients": [
-        {"type": "vegetables", "qty": 5, "measurement": ""},
-        {"type": "noodles", "qty": 300, "measurement": "gm"},
-        {"type": "soy sauce", "qty": 1, "measurement": "tbspoon"}
+        {"ingredientType": "vegetables", "qty": 5, "measurement": ""},
+        {"ingredientType": "noodles", "qty": 300, "measurement": "gm"},
+        {"ingredientType": "soy sauce", "qty": 1, "measurement": "tbspoon"}
     ],
     "serves": 4,
     "cookingTime": {"amount": 10, "unit": "min"},
@@ -38,9 +38,9 @@
     "name": "pizza",
     "instructions":"textextexttext",
     "ingredients": [
-        {"type": "vegetables", "qty": 5, "measurement": ""},
-        {"type": "noodles", "qty": 300, "measurement": "gm"},
-        {"type": "soy sauce", "qty": 1, "measurement": "tbspoon"}
+        {"ingredientType": "vegetables", "qty": 5, "measurement": ""},
+        {"ingredientType": "noodles", "qty": 300, "measurement": "gm"},
+        {"ingredientType": "soy sauce", "qty": 1, "measurement": "tbspoon"}
     ],
     "serves": 4,
     "cookingTime": {"amount": 10, "unit": "min"},
@@ -56,9 +56,9 @@
     "name": "fish and chips",
     "instructions":"textextexttext",
     "ingredients": [
-        {"type": "vegetables", "qty": 5, "measurement": ""},
-        {"type": "noodles", "qty": 300, "measurement": "gm"},
-        {"type": "soy sauce", "qty": 1, "measurement": "tbspoon"}
+        {"ingredientType": "vegetables", "qty": 5, "measurement": ""},
+        {"ingredientType": "noodles", "qty": 300, "measurement": "gm"},
+        {"ingredientType": "soy sauce", "qty": 1, "measurement": "tbspoon"}
     ],
     "serves": 4,
     "cookingTime": {"amount": 10, "unit": "min"},
