@@ -61,7 +61,7 @@ const DetailsPage = () => {
           <div className="grow bg-red-100">{details.instructions}</div>{" "}
         </>
       ) : (
-        <div />
+        <div>Loading</div>
       )}
     </div>
   );
