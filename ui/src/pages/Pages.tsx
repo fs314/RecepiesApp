@@ -8,7 +8,7 @@ const Pages = () => {
     <>
       <Routes>
         <Route path="/" element={<Browse />}></Route>
-        <Route path="/details" element={<DetailsPage resourceId="" />}></Route>
+        <Route path="/details" element={<DetailsPage />}></Route>
       </Routes>
     </>
   );

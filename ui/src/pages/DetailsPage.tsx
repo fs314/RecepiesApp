@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 // import { Recipe } from "../types";
 import { urlBuilder } from "../utils";
 
@@ -7,24 +8,27 @@ import { urlBuilder } from "../utils";
 //     details: Recipe | User
 // }
 
-const DetailsPage = ({ resourceId }: { resourceId: string }) => {
+const DetailsPage = () => {
   const [details, setDetails] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await axios.get(
-        urlBuilder(`http://localhost:4000/recipes/${resourceId}`, {})
+        urlBuilder(
+          `http://localhost:4000/recipes/${searchParams.get("id")}`,
+          {}
+        )
       );
       setDetails(res.data);
     };
 
     fetchData();
-  }, [resourceId]);
+  }, [searchParams]);
 
   return (
     <div className="w-full h-full flex">
-      <div>hi</div>
-      {/* {!!details ? (
+      {!!details ? (
         <>
           <div className="grow-0 bg-red-200">
             <div id="image-container">
@@ -58,7 +62,7 @@ const DetailsPage = ({ resourceId }: { resourceId: string }) => {
         </>
       ) : (
         <div />
-      )} */}
+      )}
     </div>
   );
 };

@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 // import { Recipe as RecipeProps } from "../types";
 
 const Recipe = (recipeDetails: any) => {
-  console.log(recipeDetails.recipeDetails.name);
   return (
-    <Link to={`details/${recipeDetails.recipeDetails._id}`}>
+    <Link to={`details?id=${recipeDetails.recipeDetails._id}`}>
       <div className="border border-black p-2 mt-5">
         <div className="max-w-md" id="image-container">
           <img
