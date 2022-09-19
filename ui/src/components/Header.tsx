@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <Link to={`/`}>
-      <div className="bg-red-400 flex w-full">
+    <div className="bg-red-400 flex w-full">
+      <Link to={`/`}>
         <div
           className="text-3xl font-bold justify-center"
           onClick={() => {
@@ -14,6 +14,9 @@ const Header = () => {
         >
           RecipesApp
         </div>
+      </Link>
+      {/* /change to user */}
+      <Link to={"/login"}>
         <div
           className="justify-center"
           onClick={() => {
@@ -22,8 +25,8 @@ const Header = () => {
         >
           <GiCook size={30} />
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
