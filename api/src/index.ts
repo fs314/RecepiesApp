@@ -5,6 +5,7 @@ import "dotenv/config";
 import dbMock from "./config/dbMock/mockData.json";
 import recipeRoutes from "./routes/recipe";
 import authRoutes from "./routes/auth";
+import profileRoutes from "./routes/profile";
 
 const app = express();
 const port = 4000;
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use("/recipes", recipeRoutes);
 app.use("/user", authRoutes);
+app.use("/profile", profileRoutes);
 
 mongoose
   .connect("")
