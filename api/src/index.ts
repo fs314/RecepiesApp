@@ -25,8 +25,7 @@ app.use(cookieParser());
 app.use("/account", accountRoutes);
 app.use("/refresh", refreshTokenRoutes);
 
-app.use(verifyJWT);
-app.use("/recipes", recipesRoutes);
+app.use("/recipes", verifyJWT, recipesRoutes);
 
 app.listen(port, () => {
   console.log("Server is running");
