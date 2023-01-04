@@ -1,21 +1,17 @@
-import React, { useRef, useState, useEffect, useContext } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import axios from "../api/axios";
-import AuthContext from "../context/AuthContext";
-
-//https://www.youtube.com/watch?v=X3qyxo_UTR4
-//Make it also to register
+import { ALL_RECEPIES, LOGIN_URL } from "../config/urlConfig";
+import useAuth from "../context/useAuth";
 
 const LoginAndRegistrationForm = () => {
-  const { setAuth } = useContext(AuthContext);
-  const LOGIN_URL = "/auth";
-
-  const userFocus = useRef<HTMLInputElement>(null); //set focus on input when component first loads
-  const errorFocus = useRef<HTMLInputElement>(null); //set focus on error for screen reader to read
-
+  const { auth, setAuth } = useAuth();
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
+
+  const userFocus = useRef<HTMLInputElement>(null); //set focus on input when component first loads
+  const errorFocus = useRef<HTMLInputElement>(null); //set focus on error for screen reader to read
 
   useEffect(() => {
     userFocus.current && userFocus.current.focus();
@@ -25,27 +21,36 @@ const LoginAndRegistrationForm = () => {
     setError("");
   }, [user, password]);
 
+  const [recipes, setRecipes] = useState<string[]>([]);
+  const getRecipes = async () => {
+    try {
+      const response = await axios.get(ALL_RECEPIES, {
+        headers: { Authorization: `Bearer ${auth?.accessToken}` },
+      });
+
+      setRecipes(response?.data);
+    } catch (e) {}
+  };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault(); // prevent default reloading
-    console.log(user, " user, ", password, " password");
 
     try {
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ user, password }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(LOGIN_URL, {
+        username: user,
+        password: password,
+      });
 
-      const accessToken = response?.data?.accessToken;
-      //   const roles = response?.data?.roles;
-      if (accessToken && setAuth) setAuth({ user, password, accessToken }); //add roles later
+      if (response.status === 200) {
+        const accessToken = response?.data?.accessToken;
+        //   const roles = response?.data?.roles;
+        if (accessToken) setAuth({ user: user, accessToken: accessToken }); //add roles later
 
-      setSuccess(true);
+        setSuccess(true);
+      } else if (response.status === 204) {
+        console.log("USER NOT FOUND. Want to register? ");
+        setSuccess(true);
+      }
     } catch (e: any) {
       console.error(e);
       if (e.response.status === 400) {
@@ -98,6 +103,10 @@ const LoginAndRegistrationForm = () => {
           </>
         )}
       </form>
+      <div>
+        {recipes?.length ? <p>{recipes[0]}</p> : <p>no recipes to display</p>}
+        <button onClick={getRecipes}>get recipes</button>
+      </div>
     </div>
   );
 };
