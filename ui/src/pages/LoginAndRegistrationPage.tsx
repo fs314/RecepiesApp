@@ -1,24 +1,37 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "../api/axios";
+import Notification, { notificationStatus } from "../components/Notification";
+import LoginAndRegistrationForm from "../components/LoginAndRegistrationForm";
 import { ALL_RECEPIES, LOGIN_URL } from "../config/urlConfig";
 import useAuth from "../context/useAuth";
 
-const LoginAndRegistrationForm = () => {
+type notification = {
+  status: notificationStatus;
+  message: string;
+};
+const LoginAndRegistrationPage = () => {
   const { auth, setAuth } = useAuth();
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<boolean>(false);
+  //GET FROM ROUTE
+  const [userAction, setUserAction] = useState<"LOGIN" | "REGISTER">("LOGIN");
+
+  const [notification, setNotification] = useState<notification>({
+    status: "DEFAULT",
+    message: "",
+  });
 
   const userFocus = useRef<HTMLInputElement>(null); //set focus on input when component first loads
-  const errorFocus = useRef<HTMLInputElement>(null); //set focus on error for screen reader to read
 
   useEffect(() => {
     userFocus.current && userFocus.current.focus();
   }, []);
 
   useEffect(() => {
-    setError("");
+    setNotification({
+      status: "DEFAULT",
+      message: "",
+    });
   }, [user, password]);
 
   const [recipes, setRecipes] = useState<string[]>([]);
@@ -46,63 +59,53 @@ const LoginAndRegistrationForm = () => {
         //   const roles = response?.data?.roles;
         if (accessToken) setAuth({ user: user, accessToken: accessToken }); //add roles later
 
-        setSuccess(true);
+        setNotification({
+          status: "SUCCESS",
+          message: `Welcome back ${auth?.user}!`,
+        });
       } else if (response.status === 204) {
         console.log("USER NOT FOUND. Want to register? ");
-        setSuccess(true);
+        setNotification({
+          status: "INFO",
+          message: `User ${user} does not exists.. do you want to register?`,
+        });
       }
     } catch (e: any) {
-      console.error(e);
       if (e.response.status === 400) {
-        setError(
-          "Something went wrong, check username and password are correct."
-        );
+        setNotification({
+          status: "ERROR",
+          message:
+            "Something went wrong, check username and password are correct.",
+        });
       } else if (e.response.status === 401) {
-        setError("Access denied.");
+        setNotification({
+          status: "ERROR",
+          message: "Access denied.",
+        });
       } else {
-        setError("Login failed. Please try again later. ");
+        setNotification({
+          status: "ERROR",
+          message: `Login failed, please try again later. error: ${e}`,
+        });
       }
     }
   };
 
   return (
     <div>
-      <p
-        ref={errorFocus}
-        className={!!error.length ? "text-red-600" : "invisible"}
-      >
-        {error}
-      </p>
-
-      <form onSubmit={handleSubmit}>
-        {success ? (
-          <div>Successful Login</div>
-        ) : (
-          <>
-            <label htmlFor="username">Username:</label>
-            <input
-              type="text"
-              id="username"
-              ref={userFocus}
-              autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
-              value={user} //makes it a controlled input. Important to clear up upon submission.
-              required
-            />
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password" //hides typing
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
-              value={password}
-              required
-            />
-            {/* no need to add onClick as it is the only button in the form */}
-            {/* PUT ROUTER LINK HERE  */}
-            <button>Sign In</button>
-          </>
-        )}
-      </form>
+      <Notification
+        status={notification.status}
+        message={notification.message}
+      />
+      <LoginAndRegistrationForm
+        handleSubmit={handleSubmit}
+        user={user}
+        password={password}
+        userAction={userAction}
+        setUser={setUser}
+        setPassword={setPassword}
+        setUserAction={setUserAction}
+      />
       <div>
         {recipes?.length ? <p>{recipes[0]}</p> : <p>no recipes to display</p>}
         <button onClick={getRecipes}>get recipes</button>
@@ -111,4 +114,4 @@ const LoginAndRegistrationForm = () => {
   );
 };
 
-export default LoginAndRegistrationForm;
+export default LoginAndRegistrationPage;
