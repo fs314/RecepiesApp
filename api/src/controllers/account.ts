@@ -65,6 +65,11 @@ export const loginUser = async (req: any, res: any) => {
       username,
     });
 
+    if (!registeredUsername) {
+      res.status(204).send({ message: "There was no match for this username" });
+      return;
+    }
+
     const isPasswordMatch =
       registeredUsername &&
       (await bcrypt.compare(password, registeredUsername.password));
