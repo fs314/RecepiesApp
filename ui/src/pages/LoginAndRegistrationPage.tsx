@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect } from "react";
 import axios from "../api/axios";
 import Notification, { notificationStatus } from "../components/Notification";
 import LoginAndRegistrationForm from "../components/LoginAndRegistrationForm";
-import { ALL_RECEPIES, LOGIN_URL } from "../config/urlConfig";
+import { LOGIN_URL, REGISTER_URL } from "../config/urlConfig";
 import useAuth from "../context/useAuth";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 type notification = {
   status: notificationStatus;
@@ -11,10 +12,12 @@ type notification = {
 };
 const LoginAndRegistrationPage = () => {
   const { auth, setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  //GET FROM ROUTE
-  const [userAction, setUserAction] = useState<"LOGIN" | "REGISTER">("LOGIN");
+  const [email, setEmail] = useState<string>("");
 
   const [notification, setNotification] = useState<notification>({
     status: "DEFAULT",
@@ -27,25 +30,18 @@ const LoginAndRegistrationPage = () => {
     userFocus.current && userFocus.current.focus();
   }, []);
 
-  useEffect(() => {
-    setNotification({
-      status: "DEFAULT",
-      message: "",
-    });
-  }, [user, password]);
+  // const [recipes, setRecipes] = useState<string[]>([]);
+  // const getRecipes = async () => {
+  //   try {
+  //     const response = await axios.get(ALL_RECEPIES, {
+  //       headers: { Authorization: `Bearer ${auth?.accessToken}` },
+  //     });
 
-  const [recipes, setRecipes] = useState<string[]>([]);
-  const getRecipes = async () => {
-    try {
-      const response = await axios.get(ALL_RECEPIES, {
-        headers: { Authorization: `Bearer ${auth?.accessToken}` },
-      });
+  //     setRecipes(response?.data);
+  //   } catch (e) {}
+  // };
 
-      setRecipes(response?.data);
-    } catch (e) {}
-  };
-
-  const handleSubmit = async (e: any) => {
+  const handleLoginRequest = async (e: any) => {
     e.preventDefault(); // prevent default reloading
 
     try {
@@ -56,18 +52,21 @@ const LoginAndRegistrationPage = () => {
 
       if (response.status === 200) {
         const accessToken = response?.data?.accessToken;
-        //   const roles = response?.data?.roles;
+
         if (accessToken) setAuth({ user: user, accessToken: accessToken }); //add roles later
 
         setNotification({
           status: "SUCCESS",
           message: `Welcome back ${auth?.user}!`,
         });
+        setUser("");
+        setPassword("");
+        navigate(from, { replace: true });
       } else if (response.status === 204) {
         console.log("USER NOT FOUND. Want to register? ");
         setNotification({
           status: "INFO",
-          message: `User ${user} does not exists.. do you want to register?`,
+          message: `User ${user} does not exists. Use the registration form to sign up.`,
         });
       }
     } catch (e: any) {
@@ -91,25 +90,88 @@ const LoginAndRegistrationPage = () => {
     }
   };
 
+  const handleRegisterRequest = async (e: any) => {
+    e.preventDefault(); // prevent default reloading
+
+    try {
+      const response = await axios.post(REGISTER_URL, {
+        username: user,
+        password: password,
+        email: email,
+      });
+
+      if (response.status === 200) {
+        const accessToken = response?.data?.accessToken;
+
+        if (accessToken) setAuth({ user: user, accessToken: accessToken }); //add roles later
+
+        setNotification({
+          status: "SUCCESS",
+          message: `Welcome ${auth?.user}!`,
+        });
+        setUser("");
+        setPassword("");
+        setEmail("");
+        navigate(from, { replace: true });
+      }
+    } catch (e: any) {
+      setNotification({
+        status: "ERROR",
+        message: `Registration failed, please try again later. error: ${e}`,
+      });
+    }
+  };
+
   return (
     <div>
       <Notification
         status={notification.status}
         message={notification.message}
       />
+      <div className={"inline-flex"}>
+        <Link to="/login">
+          <p
+            className={
+              location.pathname === "/login"
+                ? "text-black-600"
+                : "text-grey-600"
+            }
+          >
+            Sign in
+          </p>
+        </Link>
+
+        <p> | </p>
+        <Link to="/register">
+          <p
+            className={
+              location.pathname === "/register"
+                ? "text-black-600"
+                : "text-grey-600"
+            }
+          >
+            Create account
+          </p>
+        </Link>
+      </div>
       <LoginAndRegistrationForm
-        handleSubmit={handleSubmit}
+        handleSubmit={
+          location.pathname === "/login"
+            ? handleLoginRequest
+            : handleRegisterRequest
+        }
         user={user}
         password={password}
-        userAction={userAction}
+        email={email}
+        setEmail={setEmail}
         setUser={setUser}
         setPassword={setPassword}
-        setUserAction={setUserAction}
+        path={location.pathname}
       />
-      <div>
+      {/* <div>
         {recipes?.length ? <p>{recipes[0]}</p> : <p>no recipes to display</p>}
         <button onClick={getRecipes}>get recipes</button>
-      </div>
+      </div> */}
     </div>
   );
 };

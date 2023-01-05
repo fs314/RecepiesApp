@@ -6,19 +6,21 @@ const LoginAndRegistrationForm = ({
   setUser,
   password,
   setPassword,
-  userAction,
-  setUserAction,
+  email,
+  setEmail,
+  path,
 }: {
   handleSubmit: (e: any) => Promise<void>;
   user: string;
   setUser: (user: string) => void;
   password: string;
   setPassword: (password: string) => void;
-  userAction: "LOGIN" | "REGISTER";
-  setUserAction: (userAction: "LOGIN" | "REGISTER") => void;
+  email: string;
+  setEmail: (password: string) => void;
+  path: string;
 }) => {
   const [repeatPassword, setRepeatPassword] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const [passwordMatch, setPasswordMatch] = useState<boolean>(false);
 
   const userFocus = useRef<HTMLInputElement>(null); //set focus on input when component first loads
 
@@ -26,26 +28,12 @@ const LoginAndRegistrationForm = ({
     userFocus.current && userFocus.current.focus();
   }, []);
 
+  useEffect(() => {
+    if (password === repeatPassword && password !== "") setPasswordMatch(true);
+  }, [password, repeatPassword]);
+
   return (
     <div>
-      <div>
-        <p
-          className={
-            userAction === "LOGIN" ? "text-black-600" : "text-grey-600"
-          }
-          onClick={() => setUserAction("LOGIN")}
-        >
-          Sign in
-        </p>
-        <p
-          className={
-            userAction === "REGISTER" ? "text-black-600" : "text-grey-600"
-          }
-          onClick={() => setUserAction("REGISTER")}
-        >
-          Create account
-        </p>
-      </div>
       <form onSubmit={handleSubmit}>
         <>
           <label htmlFor="username">Username:</label>
@@ -66,7 +54,7 @@ const LoginAndRegistrationForm = ({
             value={password}
             required
           />
-          {userAction === "REGISTER" && (
+          {path === "/register" && (
             <>
               <label htmlFor="password">Repeat password:</label>
               <input
@@ -87,8 +75,12 @@ const LoginAndRegistrationForm = ({
             </>
           )}
           {/* no need to add onClick as it is the only button in the form */}
-          {/* PUT ROUTER LINK HERE  */}
-          <button>{userAction === "LOGIN" ? "Login" : "Register"}</button>
+          <input
+            className={passwordMatch ? "text-green-600" : "text-red-600"}
+            disabled={!passwordMatch && path === "/register"}
+            type="submit"
+            value="Submit"
+          />
         </>
       </form>
     </div>
