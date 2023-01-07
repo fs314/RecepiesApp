@@ -9,8 +9,7 @@ export const handleRefreshToken = async (req: any, res: any) => {
     const cookies = req.cookies;
     const username = req.body.username;
 
-    //Check that username and password have been inputted
-    if (!cookies?.jwt) return res.status(401);
+    if (!cookies?.jwt) return res.sendStatus(401);
 
     console.log(cookies.jwt);
 
@@ -18,7 +17,7 @@ export const handleRefreshToken = async (req: any, res: any) => {
 
     //Get account associated with username
     const user = await UserAccount.findOne({
-      username,
+      refreshToken,
     });
 
     if (!user) res.status(403);
@@ -40,7 +39,7 @@ export const handleRefreshToken = async (req: any, res: any) => {
       }
     );
 
-    res.status(200).send();
+    res.status(200).send("Refreshed Token");
   } catch (error: unknown) {
     if (error instanceof Error)
       res.status(400).send("[ ERROR ] Login failed with the following error:", {

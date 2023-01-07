@@ -14,7 +14,7 @@ const LoginAndRegistrationPage = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/browse";
   const [user, setUser] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -29,17 +29,6 @@ const LoginAndRegistrationPage = () => {
   useEffect(() => {
     userFocus.current && userFocus.current.focus();
   }, []);
-
-  // const [recipes, setRecipes] = useState<string[]>([]);
-  // const getRecipes = async () => {
-  //   try {
-  //     const response = await axios.get(ALL_RECEPIES, {
-  //       headers: { Authorization: `Bearer ${auth?.accessToken}` },
-  //     });
-
-  //     setRecipes(response?.data);
-  //   } catch (e) {}
-  // };
 
   const handleLoginRequest = async (e: any) => {
     e.preventDefault(); // prevent default reloading
@@ -63,7 +52,6 @@ const LoginAndRegistrationPage = () => {
         setPassword("");
         navigate(from, { replace: true });
       } else if (response.status === 204) {
-        console.log("USER NOT FOUND. Want to register? ");
         setNotification({
           status: "INFO",
           message: `User ${user} does not exists. Use the registration form to sign up.`,
@@ -168,10 +156,6 @@ const LoginAndRegistrationPage = () => {
         setPassword={setPassword}
         path={location.pathname}
       />
-      {/* <div>
-        {recipes?.length ? <p>{recipes[0]}</p> : <p>no recipes to display</p>}
-        <button onClick={getRecipes}>get recipes</button>
-      </div> */}
     </div>
   );
 };

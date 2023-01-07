@@ -6,15 +6,14 @@ import useAuth from "./useAuth";
 //https://www.youtube.com/watch?v=nI8PYZNFtac&list=PL0Zuz27SZ-6PRCpm9clX0WiBEMB70FWwd&index=4
 
 const useAxiosPrivate = () => {
-  const refresh = useRefreshToken;
+  const refresh = useRefreshToken();
   const { auth } = useAuth();
 
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
-        if (!config.headers) {
-          return;
-        }
+        if (!config.headers) config.headers = {};
+
         if (!config?.headers?.["Authorization"]) {
           config.headers["Authorization"] = `Bearer ${auth?.accessToken}`;
         }

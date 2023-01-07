@@ -5,6 +5,7 @@ import LoginAndRegistrationPage from "./pages/LoginAndRegistrationPage";
 import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import Account from "./pages/Account";
+import Browse from "./pages/Browse";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route path="/login" element={<LoginAndRegistrationPage />} />
             <Route path="/register" element={<LoginAndRegistrationPage />} />
+            <Route path="/browse" element={<Browse />} />
 
             <Route element={<RequireAuth />}>
               <Route path="/account" element={<Account />} />
