@@ -6,12 +6,13 @@ import Layout from "./components/Layout";
 import RequireAuth from "./components/RequireAuth";
 import Account from "./pages/Account";
 import Browse from "./pages/Browse";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div className="App">
-      <div className="text-3xl font-bold underline">HEADER</div>
       <AuthProvider>
+        <Header />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/login" element={<LoginAndRegistrationPage />} />

@@ -4,12 +4,18 @@ import Notification, { notificationStatus } from "../components/Notification";
 import LoginAndRegistrationForm from "../components/LoginAndRegistrationForm";
 import { LOGIN_URL, REGISTER_URL } from "../config/urlConfig";
 import useAuth from "../context/useAuth";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Tabs from "../components/Tabs";
 
 type notification = {
   status: notificationStatus;
   message: string;
 };
+
+const tabsConfig = [
+  { name: "Sign In", path: "/login", selected: false },
+  { name: "Register", path: "/register", selected: false },
+];
 const LoginAndRegistrationPage = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
@@ -116,46 +122,25 @@ const LoginAndRegistrationPage = () => {
         status={notification.status}
         message={notification.message}
       />
-      <div className={"inline-flex"}>
-        <Link to="/login">
-          <p
-            className={
-              location.pathname === "/login"
-                ? "text-black-600"
-                : "text-grey-600"
-            }
-          >
-            Sign in
-          </p>
-        </Link>
-
-        <p> | </p>
-        <Link to="/register">
-          <p
-            className={
-              location.pathname === "/register"
-                ? "text-black-600"
-                : "text-grey-600"
-            }
-          >
-            Create account
-          </p>
-        </Link>
+      <div className="flex justify-center">
+        <Tabs tabs={tabsConfig} />
       </div>
-      <LoginAndRegistrationForm
-        handleSubmit={
-          location.pathname === "/login"
-            ? handleLoginRequest
-            : handleRegisterRequest
-        }
-        user={user}
-        password={password}
-        email={email}
-        setEmail={setEmail}
-        setUser={setUser}
-        setPassword={setPassword}
-        path={location.pathname}
-      />
+      <div className="flex justify-center">
+        <LoginAndRegistrationForm
+          handleSubmit={
+            location.pathname === "/login"
+              ? handleLoginRequest
+              : handleRegisterRequest
+          }
+          user={user}
+          password={password}
+          email={email}
+          setEmail={setEmail}
+          setUser={setUser}
+          setPassword={setPassword}
+          path={location.pathname}
+        />
+      </div>
     </div>
   );
 };
