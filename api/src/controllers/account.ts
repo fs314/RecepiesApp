@@ -118,6 +118,10 @@ export const loginUser = async (req: any, res: any) => {
 };
 
 export const logoutUser = async (req: any, res: any) => {
+  // if (allowedOrigins.includes(req.headers.origin)) {
+  //   res.header("Access-Control-Allow-Origin", req.headers.origin);
+  // }
+
   //On client delete also the access token - need to be done on fe
   const cookies = req.cookies;
 
