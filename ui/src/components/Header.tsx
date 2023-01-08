@@ -16,7 +16,9 @@ const Header = () => {
         </div>
         {auth?.user ? (
           <div className="flex flex-row align-center">
-            <p>{`${auth.user} | `}</p>
+            <Link to="/account">
+              <p>{`${auth.user} | `}</p>
+            </Link>
             <p
               onClick={() => {
                 console.log("log out here");
