@@ -1,30 +1,62 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ALL_RECEPIES } from "../config/urlConfig";
-import useAxiosPrivate from "../context/useAxiosPrivate";
+import axios from "../api/axios";
+
+type RecipeListing = {
+  title: string;
+  difficulty: string;
+  cookingTime: string;
+  tags: string[];
+  username: string;
+};
 
 const Browse = () => {
-  const [recipes, setRecipes] = useState<string[]>([]);
-  const axiosPrivate = useAxiosPrivate();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [recipes, setRecipes] = useState<RecipeListing[]>([]);
 
-  const getRecipes = async () => {
+  const getRecipesListings = async () => {
     try {
-      const response = await axiosPrivate.get(ALL_RECEPIES);
+      const response = await axios.get(ALL_RECEPIES);
 
-      setRecipes(response?.data);
+      setRecipes(response?.data.recipes);
     } catch (e) {
       console.log("ERROR: ", e);
-      navigate("/login", { state: { from: location }, replace: true });
     }
   };
 
+  useEffect(() => {
+    getRecipesListings();
+  }, []);
+
   return (
-    <div>
-      {recipes?.length ? <p>{recipes[0]}</p> : <p>no recipes to display</p>}
-      <button onClick={getRecipes}>get recipes</button>
+    <div className="p-2">
+      {recipes?.length ? (
+        <div className="flex flex-wrap">
+          {recipes.map((recipe) => (
+            // to define _id
+            <Link to={`/recipe/recipeid`}>
+              <div className="bg-slate-300 p-2 m-4">
+                <div>
+                  <p>{recipe.title}</p>
+                </div>
+                <div>
+                  <p className="inline-block">{recipe.cookingTime}</p>{" "}
+                  <p className="inline-block">{recipe.difficulty}</p>
+                </div>
+                <div>
+                  {recipe.tags.map((tag) => (
+                    <p className="inline-block">{`#${tag}`}</p>
+                  ))}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <p>no recipes to display</p>
+      )}
     </div>
   );
 };
