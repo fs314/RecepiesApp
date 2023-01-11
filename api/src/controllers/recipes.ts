@@ -10,11 +10,6 @@ type recipeListing = {
 };
 
 export const getRecipesListings = async (req: any, res: any) => {
-  //only to test private routes, delete later
-  // if (allowedOrigins.includes(req.headers.origin)) {
-  //   res.header("Access-Control-Allow-Origin", req.headers.origin);
-  // }
-
   try {
     const { page = 1, limit = 10 } = req.body;
 

@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import accountSchemaValidation from "../validation/account";
+import allowedOrigins from "../config/allowedOrigins";
 
 dotenv.config();
 
@@ -147,4 +148,23 @@ export const logoutUser = async (req: any, res: any) => {
 
   res.clearCookie("jwt", { httpOnly: true }); // in prd use {secure: true} to only serve on https
   return res.sendStatus(204);
+};
+
+export const getUserDetails = async (req: any, res: any) => {
+  if (allowedOrigins.includes(req.headers.origin)) {
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+  }
+
+  const username = req.query.username;
+
+  const user = await UserAccount.findOne({
+    username,
+  });
+
+  if (!user) {
+    res.status(403).send({ message: "There was no match for this username" });
+    return;
+  }
+
+  res.status(200).send({ username: user.username, email: user.email });
 };
