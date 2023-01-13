@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import React, { useEffect, useState } from "react";
 import { ACCOUNT_BASE_URL, LISTINGS_BY_USERS } from "../config/urlConfig";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../context/useAuth";
 import useAxiosPrivate from "../context/useAxiosPrivate";
 import RecipesListings from "../components/RecipesListings";
@@ -83,7 +83,13 @@ const Account = () => {
               <p>{userDetails?.username}</p>
               <p>{userDetails?.email}</p>
             </div>
-            <RecipesListings recipes={recipesListings} />
+            <RecipesListings recipes={recipesListings}>
+              <Link to="recipe-builder">
+                <div className="bg-slate-300 p-2 m-4" key={`add-recipe`}>
+                  +
+                </div>
+              </Link>
+            </RecipesListings>
           </>
         ) : (
           <div>
