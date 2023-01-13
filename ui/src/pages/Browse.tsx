@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { ALL_RECEPIES } from "../config/urlConfig";
 import axios from "../api/axios";
 
