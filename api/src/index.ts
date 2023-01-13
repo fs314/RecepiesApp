@@ -4,8 +4,7 @@ import cors from "cors";
 import * as dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import accountRoutes from "./routes/accountRoutes";
-import recipesRoutes from "./routes/recipesRoutes";
-import verifyJWT from "./middleware/verifyJWT";
+import recipesListingsRoutes from "./routes/recipesListingsRoutes";
 import refreshTokenRoutes from "./routes/refreshTokenRoutes";
 import credentials from "./middleware/credentials";
 
@@ -25,7 +24,7 @@ app.use(cookieParser());
 app.use("/account", accountRoutes);
 app.use("/refresh", refreshTokenRoutes);
 
-app.use("/recipes", recipesRoutes);
+app.use("/recipes-listings", recipesListingsRoutes);
 
 app.listen(port, () => {
   console.log("Server is running");
