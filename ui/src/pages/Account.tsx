@@ -4,6 +4,7 @@ import { ACCOUNT_BASE_URL } from "../config/urlConfig";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../context/useAuth";
 import useAxiosPrivate from "../context/useAxiosPrivate";
+import RecipesListings from "../components/RecipesListings";
 
 type UserDetails = {
   username: string;
@@ -19,7 +20,7 @@ const getUserDetails = async (
     const response = await axios.get(
       `${ACCOUNT_BASE_URL}?username=${username}`
     );
-    console.log(response.data, " HERREE");
+
     setUserDetails(response?.data);
   } catch (e) {
     console.log("ERROR: ", e);
@@ -42,15 +43,34 @@ const Account = () => {
     }
   }, [auth.user, axiosPrivate, location, navigate]);
 
+  const mockRecipes = [
+    {
+      title: "tiramisu",
+      difficulty: "easy",
+      cookingTime: "1 hr",
+      tags: ["dessert", "italian"],
+      username: "flamo3",
+    },
+    {
+      title: "tomato pasta",
+      difficulty: "easy",
+      cookingTime: "1 hr",
+      tags: ["italian"],
+      username: "flamo3",
+    },
+  ];
   return (
     <>
       <div className="text-3xl font-bold underline">ACCOUNT</div>
       <div>
         {userDetails?.username ? (
-          <div>
-            <p>{userDetails?.username}</p>
-            <p>{userDetails?.email}</p>
-          </div>
+          <>
+            <div>
+              <p>{userDetails?.username}</p>
+              <p>{userDetails?.email}</p>
+            </div>
+            <RecipesListings recipes={mockRecipes} />
+          </>
         ) : (
           <div>
             <p>FORBIDDEN</p>

@@ -1,19 +1,12 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { ALL_RECEPIES } from "../config/urlConfig";
 import axios from "../api/axios";
-
-type RecipeListing = {
-  title: string;
-  difficulty: string;
-  cookingTime: string;
-  tags: string[];
-  username: string;
-};
+import { RecipeListingDetails } from "../components/RecipeListing";
+import RecipesListings from "../components/RecipesListings";
 
 const Browse = () => {
-  const [recipes, setRecipes] = useState<RecipeListing[]>([]);
+  const [recipes, setRecipes] = useState<RecipeListingDetails[]>([]);
 
   const getRecipesListings = async () => {
     try {
@@ -32,27 +25,7 @@ const Browse = () => {
   return (
     <div className="p-2">
       {recipes?.length ? (
-        <div className="flex flex-wrap">
-          {recipes.map((recipe) => (
-            // to define _id
-            <Link to={`/recipe/recipeid`}>
-              <div className="bg-slate-300 p-2 m-4">
-                <div>
-                  <p>{recipe.title}</p>
-                </div>
-                <div>
-                  <p className="inline-block">{recipe.cookingTime}</p>{" "}
-                  <p className="inline-block">{recipe.difficulty}</p>
-                </div>
-                <div>
-                  {recipe.tags.map((tag) => (
-                    <p className="inline-block">{`#${tag}`}</p>
-                  ))}
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <RecipesListings recipes={recipes} />
       ) : (
         <p>no recipes to display</p>
       )}
