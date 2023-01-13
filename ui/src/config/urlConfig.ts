@@ -5,3 +5,5 @@ export const LISTINGS_BASE_URL = "/recipes-listings";
 
 export const LOGIN_URL = `${ACCOUNT_BASE_URL}/login`;
 export const REGISTER_URL = `${ACCOUNT_BASE_URL}/register`;
+
+export const LISTINGS_BY_USERS = `${LISTINGS_BASE_URL}/user`;

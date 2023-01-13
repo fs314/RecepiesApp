@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { ALL_RECEPIES } from "../config/urlConfig";
+import { LISTINGS_BASE_URL } from "../config/urlConfig";
 import axios from "../api/axios";
 import { RecipeListingDetails } from "../components/RecipeListing";
 import RecipesListings from "../components/RecipesListings";
@@ -10,7 +10,7 @@ const Browse = () => {
 
   const getRecipesListings = async () => {
     try {
-      const response = await axios.get(ALL_RECEPIES);
+      const response = await axios.get(LISTINGS_BASE_URL);
 
       setRecipes(response?.data.recipes);
     } catch (e) {

@@ -1,10 +1,12 @@
 import { AxiosInstance } from "axios";
 import React, { useEffect, useState } from "react";
-import { ACCOUNT_BASE_URL } from "../config/urlConfig";
+import { ACCOUNT_BASE_URL, LISTINGS_BY_USERS } from "../config/urlConfig";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../context/useAuth";
 import useAxiosPrivate from "../context/useAxiosPrivate";
 import RecipesListings from "../components/RecipesListings";
+import { RecipeListingDetails } from "../components/RecipeListing";
+import axios from "../api/axios";
 
 type UserDetails = {
   username: string;
@@ -27,9 +29,26 @@ const getUserDetails = async (
   }
 };
 
+const getRecipesListingsByUser = async (
+  username: string,
+  setRecipesListings: (recipesListings: RecipeListingDetails[]) => void
+) => {
+  try {
+    const response = await axios.get(`${LISTINGS_BY_USERS}/${username}`);
+
+    setRecipesListings(response?.data.recipesListings);
+  } catch (e) {
+    console.log("ERROR: ", e);
+  }
+};
+
 const Account = () => {
   const { auth } = useAuth();
   const [userDetails, setUserDetails] = useState<UserDetails | null>(null);
+  const [recipesListings, setRecipesListings] = useState<
+    RecipeListingDetails[]
+  >([]);
+
   const axiosPrivate = useAxiosPrivate();
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,22 +62,17 @@ const Account = () => {
     }
   }, [auth.user, axiosPrivate, location, navigate]);
 
-  const mockRecipes = [
-    {
-      title: "tiramisu",
-      difficulty: "easy",
-      cookingTime: "1 hr",
-      tags: ["dessert", "italian"],
-      username: "flamo3",
-    },
-    {
-      title: "tomato pasta",
-      difficulty: "easy",
-      cookingTime: "1 hr",
-      tags: ["italian"],
-      username: "flamo3",
-    },
-  ];
+  useEffect(() => {
+    try {
+      if (auth.user) {
+        getRecipesListingsByUser(auth.user, setRecipesListings);
+      }
+    } catch (e) {
+      console.log(e);
+      navigate("/login", { state: { from: location }, replace: true });
+    }
+  }, [auth.user, location, navigate]);
+
   return (
     <>
       <div className="text-3xl font-bold underline">ACCOUNT</div>
@@ -69,7 +83,7 @@ const Account = () => {
               <p>{userDetails?.username}</p>
               <p>{userDetails?.email}</p>
             </div>
-            <RecipesListings recipes={mockRecipes} />
+            <RecipesListings recipes={recipesListings} />
           </>
         ) : (
           <div>
